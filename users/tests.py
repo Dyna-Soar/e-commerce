@@ -1,23 +1,35 @@
 from django.test import TestCase, Client
+from users.models import User
 from users.views import UserManagement, UserAuthentication
 
+
+"""Unit tests"""
+
+
+class UserModelTest(TestCase):
+    def test_create(self):
+        user = User.objects.create_user(username='georges', password='fnezin-13579')
+        assert user.username == 'georges'
+
+
+"""Functional tests"""
 
 c = Client()
 
 
 class UserManagementTest(TestCase):
     def test_register_invalid(self):
-        response = c.post(UserManagement.register, {'username': 'john', 'password': 'smith'})
+        response = c.post('users/register', {'username': 'john', 'password': 'smith'})
         assert response.status_code == 406
 
     def test_register_valid(self):
-        response = c.post(UserManagement.register,
+        response = c.post('users/register',
                           {'username': 'john', "email": 'johnsmith@test.com', 'password': 'smith!990',
                            "confirmation": 'smith!990'})
         assert response.status_code == 200
 
     def test_register_already_taken(self):
-        response = c.post(UserManagement.register,
+        response = c.post('users/register',
                           {'username': 'john', "email": 'john@test.com', 'password': 'smith!990',
                            "confirmation": 'smith!990'})
         assert response.status_code == 403
@@ -25,11 +37,11 @@ class UserManagementTest(TestCase):
 
 class UserAuthenticationTest(TestCase):
     def test_login_invalid(self):
-        response = c.post(UserAuthentication.login_view, {'username': 'abcd', 'password': 'fueizbjk-7428'})
+        response = c.post('users/login', {'username': 'abcd', 'password': 'fueizbjk-7428'})
         assert response.status_code == 406
 
     def test_login_valid(self):
-        response = c.post(UserAuthentication.login_view, {'username': 'john', 'password': 'smith!990'})
+        response = c.post('users/login', {'username': 'john', 'password': 'smith!990'})
         assert response.status_code == 200
 
     def test_logout(self):
