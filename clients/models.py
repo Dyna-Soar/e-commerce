@@ -3,24 +3,24 @@ from django.db import models
 from users.models import User
 
 
-class Client(User):
-    COUNTRY_CHOICES = ["France"]
+class ClientUser(User):
+    COUNTRY_CHOICES = [("FR", "France")]
 
-    country = models.CharField(choices=COUNTRY_CHOICES)
-    zip_code = models.CharField
-    address = models.CharField
+    country = models.CharField(max_length=64, choices=COUNTRY_CHOICES)
+    zip_code = models.CharField(max_length=64)
+    address = models.CharField(max_length=64)
 
 
 # TODO: add validators for numeric fields
 class Card(models.Model):
-    CARD_NETWORK_CHOICES = ["Visa", "Mastercard"]
+    CARD_NETWORK_CHOICES = [("V", "Visa"), ("M", "Mastercard")]
 
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    full_name = models.CharField
-    card_network = models.CharField(choices=CARD_NETWORK_CHOICES)
-    card_number = models.IntegerField
-    card_security_code = models.IntegerField
-    expiration_date = models.DateField
+    client = models.ForeignKey(ClientUser, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=64)
+    card_network = models.CharField(max_length=64, choices=CARD_NETWORK_CHOICES)
+    card_number = models.IntegerField(max_length=32)
+    card_security_code = models.IntegerField(max_length=4)
+    expiration_date = models.CharField(max_length=8)
 
     def is_valid_card(self):
         pass
