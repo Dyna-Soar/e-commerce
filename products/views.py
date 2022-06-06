@@ -28,33 +28,31 @@ def update_product(request):
     pass
 
 
-def increase_number_item(request, product_id):
-    if request.method == 'PUT':
-        product = None
-        try:
-            product = Product.objects.get(id=product_id)
-        except:
-            return HttpResponse('Error: could not find the product')
+def increase_number_item(product_id, increase_item):
+    product = None
+    try:
+        product = Product.objects.get(id=product_id)
+    except:
+        return 'Error: could not find the product'
 
-        try:
-            product.number_in_store += request.PUT['increase_item']
-            product.save()
-            return HttpResponse('Number of items has been increased successfully')
-        except:
-            return HttpResponse('Error: could not increase the number of items')
+    try:
+        product.number_in_store += increase_item
+        product.save()
+        return 'Number of items has been increased successfully'
+    except:
+        return 'Error: could not increase the number of items'
 
 
-def decrease_number_item(request, product_id):
-    if request.method == 'POST':
-        product = None
-        try:
-            product = Product.objects.get(id=product_id)
-        except:
-            return HttpResponse('Error: could not find the product')
+def decrease_number_item(product_id, decrease_item):
+    product = None
+    try:
+        product = Product.objects.get(id=product_id)
+    except:
+        return HttpResponse('Error: could not find the product')
 
-        try:
-            product.number_in_store -= request.PUT['decrease_item']
-            product.save()
-            return HttpResponse('Number of items has been decreased successfully')
-        except:
-            return HttpResponse('Error: could not decrease the number of items')
+    try:
+        product.number_in_store -= decrease_item
+        product.save()
+        return 'Number of items has been decreased successfully'
+    except:
+        return 'Error: could not decrease the number of items'
