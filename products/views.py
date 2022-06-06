@@ -20,7 +20,7 @@ def update_product(request):
     pass
 
 
-def increase_number_product(request, product_id, number_add):
+def increase_number_item(request, product_id, number_add):
     if request.method == 'PUT':
         product = None
         try:
@@ -36,7 +36,7 @@ def increase_number_product(request, product_id, number_add):
             return HttpResponse('Error: could not increase the number of items')
 
 
-def decrease_number_product(request, product_id, number_sub):
+def decrease_number_item(request, product_id, number_sub):
     if request.method == 'PUT':
         product = None
         try:
