@@ -17,9 +17,14 @@ def register(request):
         if password != confirmation:
             return HttpResponse("Password must match confirmation")
 
+        # Check if team member
+        is_staff = False
+        if "is_staff" in request.POST and request.POST["is_staff"]:
+            is_staff = True
+
         # Attempt to create new user
         try:
-            user = User.objects.create_user(username=username, email=email, password=password)
+            user = User.objects.create_user(username=username, email=email, password=password, is_staff=is_staff)
             return HttpResponse('User created successfully')
         except IntegrityError:
             return HttpResponse("Username already taken")
