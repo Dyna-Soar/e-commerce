@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
-from django.urls import reverse
 from products.models import Product
+from products.views import increase_number_item, decrease_number_item
 
 
 """Unit tests"""
@@ -11,6 +11,24 @@ class ProductModel(TestCase):
         new_product = Product.objects.create(name='apple', description='',
                                              price=0.5, number_in_store=20)
         self.assertEqual(new_product.price, 0.5)
+
+
+class ProductNumberItems(TestCase):
+    def test_increase_items(self):
+        new_product = Product.objects.create(name='apple', description='',
+                                             price=0.5, number_in_store=20)
+
+        result = increase_number_item(new_product.id, 2)
+        self.assertEqual(result, 'Number of items has been increased successfully')
+        self.assertEqual(Product.objects.get(id=new_product.id).number_in_store, 22)
+
+    def test_decrease_number_items(self):
+        new_product = Product.objects.create(name='apple', description='',
+                                             price=0.5, number_in_store=20)
+
+        result = decrease_number_item(new_product.id, 2)
+        self.assertEqual(result, 'Number of items has been decreased successfully')
+        self.assertEqual(Product.objects.get(id=new_product.id).number_in_store, 18)
 
 
 """Functional tests"""
@@ -32,15 +50,3 @@ class ProductManagement(TestCase):
                                      'price': 0.5, 'number_in_store': 20})
         response = self.client.get('/products/')
         self.assertContains(response, 'apple')
-
-    def test_increase_number_item(self):
-        #product = Product.objects.get(id=1)
-        response = self.client.post(reverse('products:increase_number_item', args=[1]), {'increase_item': 2})
-        self.assertContains(response, 'Number of items has been increased successfully')
-        self.assertEqual(Product.objects.get(id=1).number_in_store, 22)
-
-    def decrease_number_item(self):
-        #product = Product.objects.get(id=1)
-        response = self.client.post(reverse('products/1/decrease_number_item', {'decrease_item': 4}))
-        self.assertContains(response, 'Number of items has been increased successfully')
-        self.assertEqual(Product.objects.get(id=1).number_in_store, 18)
