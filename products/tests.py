@@ -7,8 +7,9 @@ from products.models import Product
 
 class ProductModel(TestCase):
     def test_create_product(self):
-        new_product = Product.objects.create()
-        self.assertEqual(new_product.price, 1)
+        new_product = Product.objects.create(name='apple', description='',
+                                             price=0.5, number_in_store=20)
+        self.assertEqual(new_product.price, 0.5)
 
 
 """Functional tests"""
@@ -16,10 +17,10 @@ class ProductModel(TestCase):
 
 class ProductManagement(TestCase):
     def set_up(self):
-        client = Client()
+        self.client = Client()
 
     def test_create_product(self):
-        response = self.client.post('/products/create',
+        response = self.client.post('/products/create_product',
                                     {'name': 'apple', 'description': '',
                                      'price': 0.5, 'number_in_store': 20})
-        self.assertIn('Number of items has been increased successfully', response)
+        self.assertContains(response, 'Product has been created successfully')
