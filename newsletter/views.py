@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.core.mail import send_mass_mail
 from newsletter.models import Subscriber
 
@@ -12,3 +13,4 @@ def send_newsletter(request):
             'no-reply@ecommerce.com',
             emails_subscribers_list,
         )
+        return HttpResponse('Mail sent to subscribers')
