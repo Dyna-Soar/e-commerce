@@ -1,6 +1,12 @@
+import os
 from django.http import HttpResponse
 from django.core.mail import send_mass_mail
 from newsletter.models import Subscriber
+from dotenv import load_dotenv
+
+load_dotenv()
+
+NEWSLETTER_EMAIL = os.getenv("NEWSLETTER_EMAIL")
 
 
 def send_newsletter(request):
@@ -12,7 +18,7 @@ def send_newsletter(request):
         send_mass_mail(
             request.POST['subject'],
             request.POST['message'],
-            'no-reply@ecommerce.com',
+            NEWSLETTER_EMAIL,
             emails_subscribers_list,
         )
         return HttpResponse('Mail sent to subscribers')
