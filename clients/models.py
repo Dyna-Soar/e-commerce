@@ -21,8 +21,8 @@ class Card(models.Model):
     client = models.ForeignKey(ClientUser, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=64)
     card_network = models.CharField(max_length=64, choices=CARD_NETWORK_CHOICES)
-    card_number = models.IntegerField(max_length=32)
-    card_security_code = models.IntegerField(max_length=4)
+    card_number = models.IntegerField()
+    card_security_code = models.IntegerField()
     expiration_date = models.CharField(max_length=8)
 
     def __str__(self):
