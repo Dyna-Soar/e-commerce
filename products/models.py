@@ -10,4 +10,4 @@ class Product(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.name}, price: {self.price}, date updated: {self.date_updated}'
