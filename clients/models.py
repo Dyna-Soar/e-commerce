@@ -10,6 +10,9 @@ class ClientUser(User):
     zip_code = models.CharField(max_length=64)
     address = models.CharField(max_length=64)
 
+    def __str__(self):
+        return f'{self.username}'
+
 
 # TODO: add validators for numeric fields
 class Card(models.Model):
@@ -21,6 +24,9 @@ class Card(models.Model):
     card_number = models.IntegerField(max_length=32)
     card_security_code = models.IntegerField(max_length=4)
     expiration_date = models.CharField(max_length=8)
+
+    def __str__(self):
+        return f"{self.client.username} / {self.full_name}'s card"
 
     def is_valid_card(self):
         pass
