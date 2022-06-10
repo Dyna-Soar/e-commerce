@@ -61,4 +61,10 @@ class UserAuthenticationTest(TestCase):
         self.assertContains(response, 'Login successful')
 
     def test_logout(self):
-        pass
+        self.client.post('/users/register',
+                         {'username': 'john', "email": 'john@test.com',
+                          'password': 'smith!990', "confirmation": 'smith!990'})
+        self.client.post('/users/login', {'username': 'john', 'password': 'smith!990'})
+        response = self.client.get('/users/logout')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Logout successful')
