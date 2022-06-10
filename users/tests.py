@@ -53,6 +53,9 @@ class UserAuthenticationTest(TestCase):
         self.assertContains(response, 'Incorrect credentials')
 
     def test_login_valid(self):
+        self.client.post('/users/register',
+                         {'username': 'john', "email": 'john@test.com',
+                          'password': 'smith!990', "confirmation": 'smith!990'})
         response = self.client.post('/users/login', {'username': 'john', 'password': 'smith!990'})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Login successful')
