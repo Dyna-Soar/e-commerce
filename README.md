@@ -13,6 +13,9 @@
 - Product operations
 - Newsletter operations
 - Admin/staff panel
+- TODO cart stored in session
+- TODO stripe's payment api
+- MAYBE data analytics
 
 ### Testing
 Every domain/app comes with a set of unit and functional tests, using built-in django TestCase instances.
