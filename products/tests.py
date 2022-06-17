@@ -8,6 +8,7 @@ from products.views import increase_number_item, decrease_number_item
 
 class ProductModel(TestCase):
     def test_create_product(self):
+        """Test product creation"""
         new_product = Product.objects.create(name='apple', description='',
                                              price=0.5, number_in_store=20)
         self.assertEqual(new_product.price, 0.5)
@@ -15,6 +16,7 @@ class ProductModel(TestCase):
 
 class ProductNumberItems(TestCase):
     def test_increase_items(self):
+        """Test increase of items for a product"""
         new_product = Product.objects.create(name='apple', description='',
                                              price=0.5, number_in_store=20)
 
@@ -23,6 +25,7 @@ class ProductNumberItems(TestCase):
         self.assertEqual(Product.objects.get(id=new_product.id).number_in_store, 22)
 
     def test_decrease_number_items(self):
+        """Test decrease of items for a product"""
         new_product = Product.objects.create(name='apple', description='',
                                              price=0.5, number_in_store=20)
 
@@ -39,12 +42,14 @@ class ProductManagement(TestCase):
         self.client = Client()
 
     def test_create_product(self):
+        """Test product creation from a request"""
         response = self.client.post('/products/create_product',
                                     {'name': 'apple', 'description': '',
                                      'price': 0.5, 'number_in_store': 20})
         self.assertContains(response, 'Product has been created successfully')
 
     def test_view_products(self):
+        """Test display of products from a request"""
         response = self.client.post('/products/create_product',
                                     {'name': 'apple', 'description': '',
                                      'price': 0.5, 'number_in_store': 20})

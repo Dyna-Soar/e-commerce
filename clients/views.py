@@ -4,6 +4,7 @@ from clients.models import ClientUser, Card
 
 
 def client_register(request):
+    """Register new client"""
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]

@@ -7,6 +7,7 @@ from clients.models import ClientUser, Card
 
 class ClientModel(TestCase):
     def test_create_client(self):
+        """Test client creation"""
         client_user = ClientUser.objects.create(username='client_test1',
                                                 email='client@test.com',
                                                 password='fbjekzfje1654',
@@ -20,6 +21,7 @@ class ClientModel(TestCase):
 
 class CardModel(TestCase):
     def test_create_card(self):
+        """Test card creation"""
         client_user = ClientUser.objects.create(username='client_test1',
                                                 email='client@test.com',
                                                 password='fbjekzfje1654',

@@ -10,6 +10,7 @@ NEWSLETTER_EMAIL = os.getenv("NEWSLETTER_EMAIL")
 
 
 def send_newsletter(request):
+    """Send a mail to subscribers"""
     if request.user.is_staff is False:
         return HttpResponse('You do not have permission to perform this action')
     if request.method == 'POST':

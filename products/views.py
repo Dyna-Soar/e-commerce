@@ -3,6 +3,7 @@ from products.models import Product
 
 
 def create_product(request):
+    """Create a product from request"""
     if request.method == 'POST':
         try:
             new_product = Product.objects.create(name=request.POST['name'],
@@ -17,6 +18,7 @@ def create_product(request):
 
 
 def view_products(request):
+    """Return a list of products"""
     try:
         products = Product.objects.all()
         return HttpResponse(products)
@@ -29,6 +31,7 @@ def update_product(request):
 
 
 def increase_number_item(product_id, increase_item):
+    """Increase number of items of an existing product"""
     product = None
     try:
         product = Product.objects.get(id=product_id)
@@ -44,6 +47,7 @@ def increase_number_item(product_id, increase_item):
 
 
 def decrease_number_item(product_id, decrease_item):
+    """Decrease number of items of an existing product"""
     product = None
     try:
         product = Product.objects.get(id=product_id)
