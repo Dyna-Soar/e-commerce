@@ -21,5 +21,6 @@ urlpatterns = [
     path('users/', include('users.urls', namespace='users')),
     path('clients/', include('clients.urls', namespace='clients')),
     path('products/', include('products.urls', namespace='products')),
-    path('newsletter/', include('newsletter.urls', namespace='newsletter'))
+    path('newsletter/', include('newsletter.urls', namespace='newsletter')),
+    path('orders/', include('orders.urls', namespace='orders'))
 ]
