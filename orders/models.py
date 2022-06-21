@@ -4,8 +4,8 @@ from products.models import Product
 
 
 class OrderItem(models.Model):
-    client = models.ForeignKey(ClientUser, on_delete=models.SET_NULL)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL)
+    client = models.ForeignKey(ClientUser, on_delete=models.SET_NULL, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     number_items = models.IntegerField()
 
 
@@ -13,10 +13,17 @@ class Order(models.Model):
     LEVEL_CHOICES = ["ACCEPTED", "IN_PREPARATION", "SHIPPED", "DELIVERED"]
 
     client = models.ForeignKey(ClientUser, on_delete=models.CASCADE)
-    products = models.ManyToManyField(OrderItem)
-    address_to_ship = models.CharField()
-    level = models.CharField(default="ACCEPTED")
+    products = models.ManyToManyField(OrderItem, blank=True)
+    total_price = models.DecimalField(decimal_places=4, max_digits=16)
+    address_to_ship = models.CharField(max_length=64)
+    level = models.CharField(default="ACCEPTED", max_length=64)
     additional_information = models.TextField(blank=True)
+
+    def calculate_total_price(self):
+        total_price = 0
+        for product in self.products.all():
+            total_price += product.price * product.number_items
+        return total_price
 
     def ship(self):
         self.level = "SHIPPED"
