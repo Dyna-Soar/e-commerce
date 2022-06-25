@@ -14,7 +14,7 @@ class Order(models.Model):
 
     client = models.ForeignKey(ClientUser, on_delete=models.CASCADE)
     products = models.ManyToManyField(OrderItem, blank=True)
-    total_price = models.DecimalField(decimal_places=4, max_digits=16)
+    total_price = models.DecimalField(decimal_places=4, max_digits=16, blank=True)
     address_to_ship = models.CharField(max_length=64)
     level = models.CharField(default="ACCEPTED", max_length=64)
     additional_information = models.TextField(blank=True)

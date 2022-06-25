@@ -27,6 +27,7 @@ def create_order(request):
         for product_cart in cart_products:
             order_item = create_order_item(product_cart, request.user)
             order.products.add(order_item)
+            order.calculate_total_price()
             order.save()
         return HttpResponse(f'Order has been created: {order.total_price}')
 
